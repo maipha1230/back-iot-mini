@@ -20,7 +20,12 @@ const loginUser = async (req, res) => {
         const token = jwt.sign({ user_id: user.user_id }, process.env.JWT, {
           expiresIn: "8h",
         });
-        return res.status(200).send({ msg: "login success", token: token });
+        const profile = {
+          f_name: user.f_name,
+          l_name: user.l_name,
+          img: user.picture
+        }
+        return res.status(200).send({ msg: "login success", token: token, profile: profile });
       }
       return res.status(401).send({ msg: "password invalid" });
     }
